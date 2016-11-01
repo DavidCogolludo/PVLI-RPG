@@ -44,7 +44,7 @@ describe('Entities library', function () {
     expect(Effect).toEqual(jasmine.any(Function));
   });
 
-  xdescribe('Effect type', function () {
+  describe('Effect type', function () {
 
     it('allows specify arbitrary feature alterations.', function () {
       var effect = new Effect({
@@ -57,7 +57,7 @@ describe('Entities library', function () {
 
   });
 
-  xdescribe('Character type', function () {
+  describe('Character type', function () {
     var features = {
       initiative: 15,
       defense: 55,
@@ -74,7 +74,7 @@ describe('Entities library', function () {
       character = new Character('Test', features);
     });
 
-    it('allows to create a default character.', function () {
+    xit('allows to create a default character.', function () {
       character = new Character('Default');
       expect(character.name).toBe('Default');
       expect(character.party).toBe(null);
@@ -136,7 +136,7 @@ describe('Entities library', function () {
         effect = new Effect(variations);
       });
 
-      it('applies an effect if the effect comes from an ally.',
+      xit('applies an effect if the effect comes from an ally.',
       function () {
         var isAlly = true;
 
@@ -147,7 +147,7 @@ describe('Entities library', function () {
         });
       });
 
-      it('applies an effect if the effect comes from a foe and ' +
+      xit('applies an effect if the effect comes from a foe and ' +
       'defense roll fails.',
       function () {
         var isAlly = false;
@@ -160,7 +160,7 @@ describe('Entities library', function () {
         });
       });
 
-      it('does not applie an effect if the effect comes from a foe but ' +
+      xit('does not applie an effect if the effect comes from a foe but ' +
       'defense roll passed.',
       function () {
         var isAlly = false;
@@ -174,7 +174,7 @@ describe('Entities library', function () {
 
     });
 
-    it('prevents effects from changing name or weapon.', function () {
+    xit('prevents effects from changing name or weapon.', function () {
       var variations = {
         name: 'Avoided',
         weapon: null
@@ -210,7 +210,7 @@ describe('Entities library', function () {
 
   });
 
-  xdescribe('Item type', function () {
+  describe('Item type', function () {
 
     it('allows to create generic items', function () {
       var item = new Item('testItem', new Effect({ hp: 5 }));
