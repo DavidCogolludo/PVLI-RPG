@@ -36,7 +36,7 @@ describe('Entities library', function () {
     mockery.deregisterMock('./dice');
   });
 
-  it('includes types for characters, items, weapons and effects.', function () {
+  xit('includes types for characters, items, weapons and effects.', function () {
     expect(Character).toEqual(jasmine.any(Function));
     expect(Item).toEqual(jasmine.any(Function));
     expect(Weapon).toEqual(jasmine.any(Function));
@@ -44,7 +44,7 @@ describe('Entities library', function () {
     expect(Effect).toEqual(jasmine.any(Function));
   });
 
-  describe('Effect type', function () {
+  xdescribe('Effect type', function () {
 
     it('allows specify arbitrary feature alterations.', function () {
       var effect = new Effect({
@@ -74,7 +74,7 @@ describe('Entities library', function () {
       character = new Character('Test', features);
     });
 
-    xit('allows to create a default character.', function () {
+    it('allows to create a default character.', function () {
       character = new Character('Default');
       expect(character.name).toBe('Default');
       expect(character.party).toBe(null);
@@ -136,7 +136,7 @@ describe('Entities library', function () {
         effect = new Effect(variations);
       });
 
-      xit('applies an effect if the effect comes from an ally.',
+      it('applies an effect if the effect comes from an ally.',
       function () {
         var isAlly = true;
 
@@ -147,7 +147,7 @@ describe('Entities library', function () {
         });
       });
 
-      xit('applies an effect if the effect comes from a foe and ' +
+      it('applies an effect if the effect comes from a foe and ' +
       'defense roll fails.',
       function () {
         var isAlly = false;
@@ -160,7 +160,7 @@ describe('Entities library', function () {
         });
       });
 
-      xit('does not applie an effect if the effect comes from a foe but ' +
+      it('does not applie an effect if the effect comes from a foe but ' +
       'defense roll passed.',
       function () {
         var isAlly = false;
@@ -174,7 +174,7 @@ describe('Entities library', function () {
 
     });
 
-    xit('prevents effects from changing name or weapon.', function () {
+    it('prevents effects from changing name or weapon.', function () {
       var variations = {
         name: 'Avoided',
         weapon: null
@@ -210,7 +210,7 @@ describe('Entities library', function () {
 
   });
 
-  describe('Item type', function () {
+  xdescribe('Item type', function () {
 
     it('allows to create generic items', function () {
       var item = new Item('testItem', new Effect({ hp: 5 }));
@@ -222,7 +222,7 @@ describe('Entities library', function () {
 
   xdescribe('Weapon type', function () {
 
-    it('is a subtype of Item', function () {
+    xit('is a subtype of Item', function () {
       expect(Weapon.prototype).toEqual(jasmine.any(Item));
       expect(Weapon.prototype.constructor).toBe(Weapon);
     });
@@ -242,7 +242,7 @@ describe('Entities library', function () {
 
   });
 
-  describe('Scroll type', function () {
+  xdescribe('Scroll type', function () {
 
     it('is a subtype of Item', function () {
       expect(Scroll.prototype).toEqual(jasmine.any(Item));
@@ -263,7 +263,7 @@ describe('Entities library', function () {
 
   });
 
-  describe('Built-in entities', function () {
+  xdescribe('Built-in entities', function () {
 
     it('includes characters and weapons.', function () {
       expect(entities.characters).toEqual(jasmine.any(Object));

@@ -6,14 +6,16 @@ function Character(name, features) {
   this.name = name;
   // Extrae del parámetro features cada característica y alamacénala en
   // una propiedad.
+ 
   this.initiative = features.initiative || 0;
   this._defense = features.defense || 0;
   this.weapon = features.weapon || null;
   this._hp = features.hp || 0;
-  this.maxHp = features.maxHp || this._hp;
+  this.maxHp = features.maxHp || this._hp || 15;
  
   this._mp = features.mp || 0;
   this.maxMp = features.maxMp || this._mp;
+  this.party = null;
 }
 
 Character.prototype._immuneToEffect = ['name', 'weapon'];
@@ -30,18 +32,18 @@ Character.prototype.applyEffect = function (effect, isAlly) {
   var self = this;
 
   if (!isAlly){
-    var aleat = (Math.random() * 100);
+    var aleat = dice.d100();
     if (aleat <= this.defense) return false;
   }
 
  /* this.features.forEach( function (effect) ){
     self.
   }*/
+
   this.initiative += effect.initiative;
   this.defense += effect.defense;
-  this.weapon += effect.weapon;
   this.hp += effect.hp;
-  this.maxMp += effect.maxMp;
+  this.maxHp += effect.maxHp;
   this.mp += effect.mp;
   this.maxMp += effect.maxMp;
   return true;
