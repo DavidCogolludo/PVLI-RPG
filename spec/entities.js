@@ -227,13 +227,13 @@ describe('Entities library', function () {
       expect(Weapon.prototype.constructor).toBe(Weapon);
     });
 
-    xit('allows to create weapons with a reducing hp effect.', function () {
+    it('allows to create weapons with a reducing hp effect.', function () {
       var weapon = new Weapon('sword', 5);
       expect(weapon.effect).toEqual(jasmine.any(Effect));
       expect(weapon.effect.hp).toBe(-5);
     });
 
-    xit('allows to create weapons with extra effect.', function () {
+    it('allows to create weapons with extra effect.', function () {
       var weapon = new Weapon('sword', 5, new Effect({ mp: -5 }));
       expect(weapon.effect).toEqual(jasmine.any(Effect));
       expect(weapon.effect.hp).toBe(-5);
@@ -263,7 +263,7 @@ describe('Entities library', function () {
 
   });
 
-  xdescribe('Built-in entities', function () {
+  describe('Built-in entities', function () {
 
     it('includes characters and weapons.', function () {
       expect(entities.characters).toEqual(jasmine.any(Object));
@@ -271,7 +271,7 @@ describe('Entities library', function () {
       expect(entities.scrolls).toEqual(jasmine.any(Object));
     });
 
-    xdescribe('Characters', function () {
+    describe('Characters', function () {
 
       it('includes a tank.', function () {
         var character = entities.characters.heroTank;
@@ -350,7 +350,7 @@ describe('Entities library', function () {
 
     });
 
-    xdescribe('Weapons', function () {
+    describe('Weapons', function () {
 
       it('includes a sword.', function () {
         var weapon = entities.weapons.sword;
@@ -387,7 +387,7 @@ describe('Entities library', function () {
 
     });
 
-    xdescribe('Scrolls', function () {
+   describe('Scrolls', function () {
 
       it('includes health.', function () {
         var scroll = entities.scrolls.health;

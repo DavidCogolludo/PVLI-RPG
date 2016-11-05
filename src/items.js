@@ -6,8 +6,9 @@ function Item(name, effect) {
 }
 
 function Weapon(name, damage, extraEffect) {
-  extraEffect = extraEffect || new Effect({});
-  //Item.call(name, extraEffect);
+  var extraEffect = extraEffect || new Effect({});
+  extraEffect.hp -= damage; 
+  Item.call(this, name, extraEffect);
   // Haz que Weapon sea subtipo de Item haciendo que llame al constructor de
   // de Item. 
 }
@@ -30,11 +31,7 @@ Scroll.prototype.canBeUsed = function (mp) {
 };
 
 function Effect(variations) {
-  
-   for (var name in variations) {
-      this[name] = variations[name];
-   }
-  /*
+   
   variations = variations || {};
 
   this.initiative = variations.initiative || 0;
@@ -42,7 +39,7 @@ function Effect(variations) {
   this.hp = variations.hp || 0;
   this.maxHp = variations.maxHp || 0;
   this.mp = variations.mp || 0;
-  this.maxMp = variations.maxMp || 0;*/
+  this.maxMp = variations.maxMp || 0;
   // Copia las propiedades que se encuentran en variations como propiedades de
   // este objeto.
 }
