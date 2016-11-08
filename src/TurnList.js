@@ -56,7 +56,7 @@ TurnList.prototype._sortByInitiative = function () {
 
   aux.sort (function (a, b) {
     if(a.init < b.init){
-      return 1;s
+      return 1;
     }
     if (a.init > b.init){
       return -1;
