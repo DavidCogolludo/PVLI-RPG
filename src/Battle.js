@@ -6,12 +6,14 @@ var OptionsStack = require('./OptionsStack');
 var TurnList = require('./TurnList');
 var Effect = require('./items').Effect;
 
+
 var utils = require('./utils');
 var listToMap = utils.listToMap;
 var mapValues = utils.mapValues;
 
 function Battle() {
   EventEmitter.call(this);
+  this.histogram = {};
   this._grimoires = {};
   this._charactersById = {};
   this._turns = new TurnList();
@@ -72,23 +74,40 @@ Battle.prototype._extractGrimoiresByParty = function (parties) {
 Battle.prototype._extractCharactersById = function (parties) {
   var idCounters = {};
   var characters = [];
+  var self = this;
   var partyIds = Object.keys(parties);
   partyIds.forEach(function (partyId) {
     var members = parties[partyId].members;
     assignParty(members, partyId);
     characters = characters.concat(members);
   });
-  return listToMap(characters, useUniqueName);
+  return listToMap(characters, useUniqueName);;
 
   function assignParty(characters, party) {
     // Cambia la party de todos los personajes a la pasada como parámetro.
+    for (var i = 0; i< characters.length; i++){
+      characters[i].party = party;
+    }
+   
   }
 
   function useUniqueName(character) {
+
     // Genera nombres únicos de acuerdo a las reglas
     // de generación de identificadores que encontrarás en
     // la descripción de la práctica o en la especificación.
+    //console.log(character);
+    if(!self.histogram.hasOwnProperty(character.name)){
+    	self.histogram[character.name] = 0;
+    	self.histogram[character.name] ++;
+    	return character.name;
+    }
+	else{
+		self.histogram[character.name] ++;
+		return character.name + " " + (self.histogram[character.name]);
+	}
   }
+  
 };
 
 Battle.prototype._resetStates = function (charactersById) {
@@ -132,12 +151,28 @@ Battle.prototype._checkEndOfBattle = function () {
   return commonParty ? { winner: commonParty } : null;
 
   function isAlive(character) {
-    // Devuelve true si el personaje está vivo.
+    return !character.isDead();
   }
 
   function getCommonParty(characters) {
     // Devuelve la party que todos los personajes tienen en común o null en caso
     // de que no haya común.
+    var comun = true;
+    var firstTime = true;
+    var party;
+    for (var pj in characters){
+        if (firstTime){
+          party = pj.party;
+          firstTime = false;
+        } 
+        else {
+          if (pj[party] !== party){
+            comun = false;
+          }
+        }
+    }
+    if (!comun) return null;
+    else return party;
   }
 };
 
