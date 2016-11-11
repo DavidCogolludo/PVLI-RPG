@@ -31,6 +31,7 @@ Object.defineProperty(Battle.prototype, 'turnList', {
 });
 
 Battle.prototype.setup = function (parties) {
+  this.histogram = {};
   this._grimoires = this._extractGrimoiresByParty(parties);
   this._charactersById = this._extractCharactersById(parties);
   this._states = this._resetStates(this._charactersById);
@@ -192,6 +193,20 @@ Battle.prototype._onAction = function (action) {
   };
   // Debe llamar al método para la acción correspondiente:
   // defend -> _defend; attack -> _attack; cast -> _cast
+  switch (action){
+  	case 'defend':
+  	  this.emit(this._action, this._defend());
+  	  break;
+  	case 'attack':
+  	  this.emit(this._action, this._attack());
+  	  break;
+  	case 'cast':
+  	  this.emit(this._action, this._cast());
+  	  break;
+  	default:
+  		console.log('No es una opción');
+  }
+ 
 };
 
 Battle.prototype._defend = function () {
@@ -205,18 +220,28 @@ Battle.prototype._defend = function () {
 Battle.prototype._improveDefense = function (targetId) {
   var states = this._states[targetId];
   // Implementa la mejora de la defensa del personaje.
+ //states = this._charactersById[targetId]._defense;
+ var o = this._charactersById[targetId].defense;
+ console.log("Defensa sin aumento: " + o);
+ o = Math.ceil(o* 1.1);
+ this._charactersById[targetId].defense=o;
+ console.log("Defensa con aumento: " + o);
+  return (o);
 };
 
 Battle.prototype._restoreDefense = function (targetId) {
   // Restaura la defensa del personaje a cómo estaba antes de mejorarla.
   // Puedes utilizar el atributo this._states[targetId] para llevar tracking
   // de las defensas originales.
+
 };
 
 Battle.prototype._attack = function () {
   var self = this;
+  console.log("dentro");
   self._showTargets(function onTarget(targetId) {
     // Implementa lo que pasa cuando se ha seleccionado el objetivo.
+
     self._executeAction();
     self._restoreDefense(targetId);
   });

@@ -24,7 +24,7 @@ TurnList.prototype.next = function () {
   while (!found){
     i = i % length;
     
-    var aux = this._charactersById[this.list[i]]._isDead;
+    var aux = this._charactersById[this.list[i]].isDead();
     if (!aux){
       this.activeCharacterId = this.list[i];
       found = true;
