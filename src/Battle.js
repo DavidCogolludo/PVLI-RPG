@@ -221,27 +221,27 @@ Battle.prototype._improveDefense = function (targetId) {
   var states = this._states[targetId];
   // Implementa la mejora de la defensa del personaje.
  //states = this._charactersById[targetId]._defense;
- var o = this._charactersById[targetId].defense;
- console.log("Defensa sin aumento: " + o);
- o = Math.ceil(o* 1.1);
- this._charactersById[targetId].defense=o;
- console.log("Defensa con aumento: " + o);
-  return (o);
+ var defense = this._charactersById[targetId].defense;
+ defense = Math.ceil(defense* 1.1);
+ this._charactersById[targetId].defense=defense;
+  return (defense);
 };
 
 Battle.prototype._restoreDefense = function (targetId) {
   // Restaura la defensa del personaje a cómo estaba antes de mejorarla.
   // Puedes utilizar el atributo this._states[targetId] para llevar tracking
   // de las defensas originales.
+  
 
 };
 
 Battle.prototype._attack = function () {
   var self = this;
-  console.log("dentro");
   self._showTargets(function onTarget(targetId) {
     // Implementa lo que pasa cuando se ha seleccionado el objetivo.
-
+    var activeCharacterId = self._action.activeCharacterId;
+    self._action.targetId = targetId;
+    self._action.effect = self._charactersById[activeCharacterId].weapon.effect; //-------------------------------------------------------------------
     self._executeAction();
     self._restoreDefense(targetId);
   });
@@ -275,7 +275,15 @@ Battle.prototype._informAction = function () {
 Battle.prototype._showTargets = function (onSelection) {
   // Toma ejemplo de la función ._showActions() para mostrar los identificadores
   // de los objetivos.
-
+  var opt = {};
+  for (var id in this._charactersById){
+  	if (this._charactersById[id].hp > 0){
+  	 opt[id] = true;
+  	}
+  }
+  
+  this.options.current = opt;
+  
   this.options.current.on('chose', onSelection);
 };
 

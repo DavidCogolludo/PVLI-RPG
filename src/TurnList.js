@@ -16,20 +16,20 @@ TurnList.prototype.next = function () {
   // según la especificación. Recuerda que debe saltar los personajes
   // muertos.
     
+  var cont = this.turnNumber;
   this.turnNumber ++;
-  var i = 0;
   var found = false;
   var length = this.list.length;
 
   while (!found){
-    i = i % length;
+    cont = cont % length;
     
-    var aux = this._charactersById[this.list[i]].isDead();
+    var aux = this._charactersById[this.list[cont]].isDead();
     if (!aux){
-      this.activeCharacterId = this.list[i];
+      this.activeCharacterId = this.list[cont];
       found = true;
     }
-    i++;
+    cont++;
   }
 
   var turno = {
@@ -52,7 +52,6 @@ TurnList.prototype._sortByInitiative = function () {
       init: this._charactersById[obj].initiative
     })
   }
-  //console.log(list);
 
   aux.sort (function (a, b) {
     if(a.init < b.init){
@@ -68,7 +67,6 @@ TurnList.prototype._sortByInitiative = function () {
     list.push(aux[i].name);
   }
 
-  //console.log(ini);
   return list;
 };
 

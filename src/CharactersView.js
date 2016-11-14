@@ -50,7 +50,7 @@ CharactersView.prototype._getViewFor = function (character) {
   var view = {};
   for (var obj in this._visibleFeatures){
     obj = this._visibleFeatures[obj];
-    view[obj]= character[obj];
+    view[obj] = character[obj];
   }
   
 
