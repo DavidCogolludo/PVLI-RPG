@@ -7,7 +7,13 @@ function Item(name, effect) {
 
 function Weapon(name, damage, extraEffect) {
   extraEffect = extraEffect || new Effect({});
-  extraEffect.hp -= damage; 
+  
+  if(!extraEffect.hp){
+   extraEffect.hp = damage*(-1);
+ }
+ else{
+  extraEffect.hp -= damage;
+ }
   Item.call(this, name, extraEffect);
   // Haz que Weapon sea subtipo de Item haciendo que llame al constructor de
   // de Item. 

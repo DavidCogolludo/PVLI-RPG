@@ -47,7 +47,7 @@ var lib = module.exports = {
         weapon: lib.weapons.wand,
         defense: 50,
         hp: 40,
-        mp: 100,
+        mp: 100
       });
     },
 

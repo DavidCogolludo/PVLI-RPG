@@ -36,7 +36,7 @@ describe('Entities library', function () {
     mockery.deregisterMock('./dice');
   });
 
-  xit('includes types for characters, items, weapons and effects.', function () {
+  it('includes types for characters, items, weapons and effects.', function () {
     expect(Character).toEqual(jasmine.any(Function));
     expect(Item).toEqual(jasmine.any(Function));
     expect(Weapon).toEqual(jasmine.any(Function));

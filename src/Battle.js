@@ -93,11 +93,9 @@ Battle.prototype._extractCharactersById = function (parties) {
   }
 
   function useUniqueName(character) {
-
     // Genera nombres únicos de acuerdo a las reglas
     // de generación de identificadores que encontrarás en
     // la descripción de la práctica o en la especificación.
-    //console.log(character);
     if(!self.histogram.hasOwnProperty(character.name)){
     	self.histogram[character.name] = 0;
     	self.histogram[character.name] ++;
@@ -161,19 +159,20 @@ Battle.prototype._checkEndOfBattle = function () {
     var comun = true;
     var firstTime = true;
     var party;
-    for (var pj in characters){
+    for (var i = 0; i < characters.length; i++){
         if (firstTime){
-          party = pj.party;
+          party = characters[i].party;
           firstTime = false;
         } 
         else {
-          if (pj[party] !== party){
+          if (characters[i].party !== party){
             comun = false;
           }
         }
     }
-    if (!comun) return null;
-    else return party;
+    //console.log(party);
+    if (!comun) { return null;  }
+    else { return party };
   }
 };
 
@@ -218,9 +217,11 @@ Battle.prototype._defend = function () {
 };
 
 Battle.prototype._improveDefense = function (targetId) {
+  if (!this._states[targetId].defense){
+  this._states[targetId].defense = this._charactersById[targetId].defense;
+  }
   var states = this._states[targetId];
-  // Implementa la mejora de la defensa del personaje.
- //states = this._charactersById[targetId]._defense;
+   // Implementa la mejora de la defensa del personaje.
  var defense = this._charactersById[targetId].defense;
  defense = Math.ceil(defense* 1.1);
  this._charactersById[targetId].defense=defense;
@@ -231,7 +232,7 @@ Battle.prototype._restoreDefense = function (targetId) {
   // Restaura la defensa del personaje a cómo estaba antes de mejorarla.
   // Puedes utilizar el atributo this._states[targetId] para llevar tracking
   // de las defensas originales.
-  
+  this._charactersById[targetId].defense = this._states[targetId].defense;
 
 };
 
@@ -241,7 +242,7 @@ Battle.prototype._attack = function () {
     // Implementa lo que pasa cuando se ha seleccionado el objetivo.
     var activeCharacterId = self._action.activeCharacterId;
     self._action.targetId = targetId;
-    self._action.effect = self._charactersById[activeCharacterId].weapon.effect; //-------------------------------------------------------------------
+    self._action.effect = self._charactersById[activeCharacterId].weapon.effect;
     self._executeAction();
     self._restoreDefense(targetId);
   });
@@ -251,6 +252,16 @@ Battle.prototype._cast = function () {
   var self = this;
   self._showScrolls(function onScroll(scrollId, scroll) {
     // Implementa lo que pasa cuando se ha seleccionado el hechizo.
+    self._showTargets(function onTarget(targetId) {
+    // Implementa lo que pasa cuando se ha seleccionado el objetivo.
+    var activeCharacterId = self._action.activeCharacterId;
+    self._action.targetId = targetId;
+    self._action.scrollName = scrollId;
+    self._action.effect = scroll.effect;
+    self._charactersById[activeCharacterId].mp -= scroll.cost;
+    self._executeAction();
+    self._restoreDefense(targetId);
+  });
   });
 };
 
@@ -283,13 +294,21 @@ Battle.prototype._showTargets = function (onSelection) {
   }
   
   this.options.current = opt;
-  
   this.options.current.on('chose', onSelection);
 };
 
 Battle.prototype._showScrolls = function (onSelection) {
   // Toma ejemplo de la función anterior para mostrar los hechizos. Estudia
   // bien qué parámetros se envían a los listener del evento chose.
+  var party = this._charactersById[this._action.activeCharacterId].party;
+  var opt = {};
+
+  for (var id in this._grimoires[party]){
+    if (this._charactersById[this._action.activeCharacterId].mp >= this._grimoires[party][id].cost){
+     opt[id] = this._grimoires[party][id];
+    }
+  }
+  this.options.current = opt;
   this.options.current.on('chose', onSelection);
 };
 
