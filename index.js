@@ -143,7 +143,9 @@ function showTargets() {
       if (!isNaN(selection) && selection >= 0 && selection <= items.length) {
         if (selection === 0) {
           battle.options.cancel();
+            console.log('dentro');
           readline.moveCursor(process.stdin, 0, -(4 + items.length));
+  			console.log('dentro2');
           readline.clearScreenDown(process.stdin);
           if (action === 'attack') {
             showActions();

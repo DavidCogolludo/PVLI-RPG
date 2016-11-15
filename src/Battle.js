@@ -82,11 +82,11 @@ Battle.prototype._extractCharactersById = function (parties) {
     assignParty(members, partyId);
     characters = characters.concat(members);
   });
-  return listToMap(characters, useUniqueName);;
+  return listToMap(characters, useUniqueName);
 
   function assignParty(characters, party) {
     // Cambia la party de todos los personajes a la pasada como parámetro.
-    for (var i = 0; i< characters.length; i++){
+    for (var i = 0; i < characters.length; i++){
       characters[i].party = party;
     }
    
@@ -97,13 +97,13 @@ Battle.prototype._extractCharactersById = function (parties) {
     // de generación de identificadores que encontrarás en
     // la descripción de la práctica o en la especificación.
     if(!self.histogram.hasOwnProperty(character.name)){
-    	self.histogram[character.name] = 0;
-    	self.histogram[character.name] ++;
-    	return character.name;
+        self.histogram[character.name] = 0;
+        self.histogram[character.name] ++;
+        return character.name;
     }
 	else{
 		self.histogram[character.name] ++;
-		return character.name + " " + (self.histogram[character.name]);
+		return character.name + ' ' + (self.histogram[character.name]);
 	}
   }
   
@@ -172,7 +172,7 @@ Battle.prototype._checkEndOfBattle = function () {
     }
     //console.log(party);
     if (!comun) { return null;  }
-    else { return party };
+    else { return party }
   }
 };
 
@@ -193,17 +193,15 @@ Battle.prototype._onAction = function (action) {
   // Debe llamar al método para la acción correspondiente:
   // defend -> _defend; attack -> _attack; cast -> _cast
   switch (action){
-  	case 'defend':
-  	  this.emit(this._action, this._defend());
-  	  break;
-  	case 'attack':
-  	  this.emit(this._action, this._attack());
-  	  break;
-  	case 'cast':
-  	  this.emit(this._action, this._cast());
-  	  break;
-  	default:
-  		console.log('No es una opción');
+    case 'defend':
+      this.emit(this._action, this._defend());
+      break;
+    case 'attack':
+      this.emit(this._action, this._attack());
+      break;
+    case 'cast':
+      this.emit(this._action, this._cast());
+      break;
   }
  
 };
@@ -220,11 +218,10 @@ Battle.prototype._improveDefense = function (targetId) {
   if (!this._states[targetId].defense){
   this._states[targetId].defense = this._charactersById[targetId].defense;
   }
-  var states = this._states[targetId];
    // Implementa la mejora de la defensa del personaje.
  var defense = this._charactersById[targetId].defense;
- defense = Math.ceil(defense* 1.1);
- this._charactersById[targetId].defense=defense;
+ defense = Math.ceil(defense * 1.1);
+ this._charactersById[targetId].defense = defense;
   return (defense);
 };
 
@@ -288,9 +285,9 @@ Battle.prototype._showTargets = function (onSelection) {
   // de los objetivos.
   var opt = {};
   for (var id in this._charactersById){
-  	if (this._charactersById[id].hp > 0){
-  	 opt[id] = true;
-  	}
+     if (this._charactersById[id].hp > 0){
+        opt[id] = true;
+     }
   }
   
   this.options.current = opt;
