@@ -9,7 +9,7 @@ function Weapon(name, damage, extraEffect) {
   extraEffect = extraEffect || new Effect({});
   
   if(!extraEffect.hp){
-   extraEffect.hp = damage*(-1);
+   extraEffect.hp = damage * (-1);
  }
  else{
   extraEffect.hp -= damage;

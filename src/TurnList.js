@@ -15,8 +15,18 @@ TurnList.prototype.next = function () {
   // Haz que calcule el siguiente turno y devuelva el resultado
   // según la especificación. Recuerda que debe saltar los personajes
   // muertos.
-    
-  var cont = this.turnNumber;
+  this._findActiveCharacter();
+  var turno = {
+    number: this.turnNumber,
+    party: this._charactersById[this.activeCharacterId].party,
+    activeCharacterId: this.activeCharacterId
+  };
+
+  return turno;
+};
+//función auxiliar que encuentra el character activo e ignora los muertos
+TurnList.prototype._findActiveCharacter = function(){
+ var cont = this.turnNumber;
   this.turnNumber ++;
   var found = false;
   var length = this.list.length;
@@ -32,14 +42,7 @@ TurnList.prototype.next = function () {
     cont++;
   }
 
-  var turno = {
-    number: this.turnNumber,
-    party: this._charactersById[this.activeCharacterId].party,
-    activeCharacterId: this.activeCharacterId
-  };
-
-  return turno;
-};
+}
 
 TurnList.prototype._sortByInitiative = function () {
   // Utiliza la función Array.sort(). ¡No te implementes tu propia
