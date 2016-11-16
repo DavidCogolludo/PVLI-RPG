@@ -48,78 +48,19 @@ CharactersView.prototype._getViewFor = function (character) {
   // devolver un objeto de JavaScript con las características visibles pero
   // no modificables.
   var view = {};
-  for (var obj in this._visibleFeatures){
-    obj = this._visibleFeatures[obj];
-    view[obj] = character[obj];
-  }
   
+  this._visibleFeatures.forEach(function(carac){
+    view[carac] = character[carac];
 
-  Object.defineProperty (view, 'party', {
+  Object.defineProperty (view, carac, {
       get: function () {
-        // ¿Cómo sería este getter para reflejar la propiedad del personaje?
-        return character.party;
+        return character[carac];
       },
-      set: function (value) {},
+      set: function () {},
 
       enumerable: true
     });
-   Object.defineProperty (view, 'name', {
-      get: function () {
-        // ¿Cómo sería este getter para reflejar la propiedad del personaje?
-        return character.name;
-      },
-      set: function (value) {},
-
-      enumerable: true
-    });
-    Object.defineProperty (view, 'initiative', {
-      get: function () {
-        return character.initiative;
-      },
-      set: function (value) {},
-
-      enumerable: true
-    });
- Object.defineProperty (view, 'defense', {
-      get: function () {
-        return character.defense;
-      },
-      set: function (value) {},
-
-      enumerable: true
-    });
- Object.defineProperty (view, 'hp', {
-      get: function () {
-        return character.hp;
-      },
-      set: function (value) {},
-
-      enumerable: true
-    });
- Object.defineProperty (view, 'mp', {
-      get: function () {
-        return character.mp;
-      },
-      set: function (value) {},
-
-      enumerable: true
-    });
- Object.defineProperty (view, 'maxHp', {
-      get: function () {
-        return character.maxHp;
-      },
-      set: function (value) {},
-
-      enumerable: true
-    });
- Object.defineProperty (view, 'maxMp', {
-      get: function () {
-        return character.maxMp;
-      },
-      set: function (value) {},
-
-      enumerable: true
-    });
+});
 
   return view;// Acuérdate de devolver el objeto.
 };
