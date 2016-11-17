@@ -154,21 +154,14 @@ Battle.prototype._checkEndOfBattle = function () {
   function getCommonParty(characters) {
     // Devuelve la party que todos los personajes tienen en común o null en caso
     // de que no haya común.
-    var common = true;
     var party = characters[0].party || null;
 
     characters.forEach(function(character){
         if (character.party !== party){
-            common = false;
+            party = null;
         }
     })
-
-    if (common) {
-        return party;
-    }
-    else {
-        return null;
-    }
+    return party;
   }
 };
 
